@@ -110,7 +110,6 @@ inquirer.prompt([
 				break;
 
 				case "do-what-it-says":
-				readFromFile();
 
 				break;
 			}
