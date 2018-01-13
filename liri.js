@@ -1,12 +1,42 @@
-	var twitter = require('twitter');
-	var spotify = require('spotify');
-	var request = require('request');
-	var fs = require("fs");
-	var inquirer = require('inquirer');
 	var keys = require('./keys.js');  
+	var Spotify = require('spotify');
+	var Twitter = require('twitter');
+	var request = require('request');
+	var fs = require('fs');
+	var inquirer = require('inquirer');
 
 
 
+function displayTweet () {
+
+var twitterKeys = keys.twitterKeys;
+// Twitter
+var client = new Twitter({
+  consumer_key: twitter.consumer_key,
+  consumer_secret: twitter.consumer_secret,
+  access_token_key: twitter.access_token_key,
+  access_token_secret: twitter.access_token_secret
+});
+
+var params = {
+		screen_name: 'webdevCW',
+		count: 20
+	};
+
+	file.log(" ");
+	file.log("---------------------------------- Tweets ----------------------------------");
+
+	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+		if (error) {
+			console.log(error);
+		}
+		if (!error) {
+			tweets.forEach(function(tweet) {
+				file.log(tweet.text);
+			})
+		}
+	});
+}
 
 inquirer.prompt([
 
@@ -34,7 +64,7 @@ inquirer.prompt([
 						answers.twitterName = "webdevCW";
 					}
 					
-					displayTweets(answers.twitterName);
+					displayTweet(answers.twitterName);
 					
 				});
 		
@@ -51,7 +81,7 @@ inquirer.prompt([
 				]).then(answers => {
 
 					if (!answers.song ){
-						answers.song = "The Sign, Ace of Base";
+						answers.song = "The Sign";
 					}
 					
 					displaySongInfo(answers.song);
@@ -86,3 +116,4 @@ inquirer.prompt([
 			}
 
 		});
+
